@@ -1,0 +1,11 @@
+{
+  "name": "taskflow",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full Stack team project and task management application",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {}
+}
