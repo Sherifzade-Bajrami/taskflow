@@ -10,8 +10,7 @@ type Project = {
   description: string;
   status: ProjectStatus;
 };
-
-const projects: Project[] = [
+const initialProjects: Project[] = [
   {
     id: 1,
     title: "Website Redesign",
@@ -34,9 +33,28 @@ const projects: Project[] = [
 ];
 
 function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
+  const handleCreateProject = (
+  title: string,
+  description: string,
+  status: ProjectStatus,
+) => {
+  const newProject: Project = {
+    id: Date.now(),
+    title,
+    description,
+    status,
+  }
+
+  setProjects((currentProjects) => [
+    ...currentProjects,
+    newProject,
+  ])
+
+  setIsNewProjectOpen(false)
+}
   return (
-    
     <main>
       <div className="flex items-start justify-between gap-6">
         <div>
@@ -67,9 +85,10 @@ function ProjectsPage() {
         ))}
       </section>
       <NewProjectModal
-  isOpen={isNewProjectOpen}
-  onClose={() => setIsNewProjectOpen(false)}
-/>
+        isOpen={isNewProjectOpen}
+        onClose={() => setIsNewProjectOpen(false)}
+        onCreate={handleCreateProject}
+      />
     </main>
   );
 }

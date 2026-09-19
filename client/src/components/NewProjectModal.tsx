@@ -1,14 +1,46 @@
-type NewProjectModalProps = {
-  isOpen: boolean
-  onClose: () => void
-}
+import { useState, type FormEvent } from "react";
 
-function NewProjectModal({
-  isOpen,
-  onClose,
-}: NewProjectModalProps) {
+type ProjectStatus = "Active" | "Completed" | "On Hold";
+
+type NewProjectModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  onCreate: (title: string, description: string, status: ProjectStatus) => void;
+};
+
+function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState<ProjectStatus>("Active");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!title.trim() || !description.trim()) {
+      setError("Title and description are required.");
+      return;
+    }
+
+    onCreate(title.trim(), description.trim(), status);
+
+    setTitle("");
+    setDescription("");
+    setStatus("Active");
+    setError("");
+  };
+
+  const handleClose = () => {
+    setTitle("");
+    setDescription("");
+    setStatus("Active");
+    setError("");
+
+    onClose();
+  };
+
   if (!isOpen) {
-    return null
+    return null;
   }
 
   return (
@@ -32,7 +64,7 @@ function NewProjectModal({
           </p>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="project-title"
@@ -44,6 +76,8 @@ function NewProjectModal({
             <input
               id="project-title"
               type="text"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
               className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
               placeholder="Project title"
             />
@@ -60,6 +94,8 @@ function NewProjectModal({
             <textarea
               id="project-description"
               rows={4}
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
               className="w-full resize-none rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
               placeholder="Project description"
             />
@@ -75,6 +111,10 @@ function NewProjectModal({
 
             <select
               id="project-status"
+              value={status}
+              onChange={(event) =>
+                setStatus(event.target.value as ProjectStatus)
+              }
               className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
             >
               <option value="Active">Active</option>
@@ -82,11 +122,12 @@ function NewProjectModal({
               <option value="Completed">Completed</option>
             </select>
           </div>
+          {error && <p className="text-sm font-medium text-red-600">{error}</p>}
 
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
             >
               Cancel
@@ -102,7 +143,7 @@ function NewProjectModal({
         </form>
       </div>
     </div>
-  )
+  );
 }
 
-export default NewProjectModal
+export default NewProjectModal;

@@ -12,7 +12,7 @@ function AppLayout() {
         <Header />
 
         <div className="p-8">
-          <Outlet />
+          <Outlet />  
         </div>
       </div>
     </div>
