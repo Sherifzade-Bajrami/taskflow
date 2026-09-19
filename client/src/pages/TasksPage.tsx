@@ -1,7 +1,8 @@
 import { useState } from "react";
-
 import NewTaskModal from "../components/NewTaskModal";
+import EditTaskModal from "../components/EditTaskModal";
 import TaskCard from "../components/TaskCard";
+
 type TaskStatus = "Todo" | "In Progress" | "Completed";
 type TaskPriority = "Low" | "Medium" | "High";
 
@@ -46,6 +47,7 @@ function TasksPage() {
   const [isNewTaskOpen, setIsNewTaskOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<"All" | TaskStatus>("All");
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const handleCreateTask = (
     title: string,
@@ -67,6 +69,22 @@ function TasksPage() {
 
     setIsNewTaskOpen(false);
   };
+  const handleUpdateTask = (updatedTask: Task) => {
+  setTasks((currentTasks) =>
+    currentTasks.map((task) =>
+      task.id === updatedTask.id
+        ? updatedTask
+        : task
+    )
+  );
+
+  setSelectedTask(null);
+};
+  const handleDeleteTask = (id: number) => {
+  setTasks((currentTasks) =>
+    currentTasks.filter((task) => task.id !== id)
+  );
+};
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch = task.title
       .toLowerCase()
@@ -130,6 +148,8 @@ function TasksPage() {
             priority={task.priority}
             dueDate={task.dueDate}
             assignee={task.assignee}
+            onEdit={() => setSelectedTask(task)}
+            onDelete={() => handleDeleteTask(task.id)}
           />
         ))}
       </section>
@@ -138,6 +158,13 @@ function TasksPage() {
         onClose={() => setIsNewTaskOpen(false)}
         onCreate={handleCreateTask}
       />
+      {selectedTask && (
+        <EditTaskModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onSave={handleUpdateTask}
+        />
+      )}
     </main>
   );
 }

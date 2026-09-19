@@ -7,6 +7,8 @@ type TaskCardProps = {
   priority: TaskPriority;
   dueDate: string;
   assignee: string;
+  onEdit: () => void;
+  onDelete: () => void;
 };
 
 function TaskCard({
@@ -15,6 +17,8 @@ function TaskCard({
   priority,
   dueDate,
   assignee,
+  onEdit,
+  onDelete,
 }: TaskCardProps) {
   return (
     <article className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
@@ -29,17 +33,42 @@ function TaskCard({
       <div className="mt-5 space-y-2 text-sm text-zinc-600">
         <p>
           Priority:{" "}
-          <span className="font-medium text-zinc-900">{priority}</span>
+          <span className="font-medium text-zinc-900">
+            {priority}
+          </span>
         </p>
 
         <p>
-          Due: <span className="font-medium text-zinc-900">{dueDate}</span>
+          Due:{" "}
+          <span className="font-medium text-zinc-900">
+            {dueDate}
+          </span>
         </p>
 
         <p>
           Assigned to:{" "}
-          <span className="font-medium text-zinc-900">{assignee}</span>
+          <span className="font-medium text-zinc-900">
+            {assignee}
+          </span>
         </p>
+      </div>
+
+      <div className="mt-5 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onEdit}
+          className="rounded-lg border border-zinc-300 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 hover:text-zinc-950"
+        >
+          Edit
+        </button>
+
+        <button
+          type="button"
+          onClick={onDelete}
+          className="rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 hover:text-red-700"
+        >
+          Delete
+        </button>
       </div>
     </article>
   );
