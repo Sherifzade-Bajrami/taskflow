@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { ChevronDown } from "lucide-react";
 
 type TaskStatus = "Todo" | "In Progress" | "Completed";
 type TaskPriority = "Low" | "Medium" | "High";
@@ -49,27 +50,41 @@ function EditTaskModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl">
-        <h2 className="text-xl font-semibold text-zinc-950">
-          Edit Task
-        </h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="edit-task-title"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
+      >
+        <div className="mb-6">
+          <h2
+            id="edit-task-title"
+            className="text-xl font-semibold text-zinc-950"
+          >
+            Edit Task
+          </h2>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <p className="mt-1 text-sm text-zinc-500">
+            Update this task&apos;s information.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
-              htmlFor="edit-task-title"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              htmlFor="edit-task-name"
+              className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
               Title
             </label>
 
             <input
-              id="edit-task-title"
+              id="edit-task-name"
               type="text"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
@@ -77,52 +92,66 @@ function EditTaskModal({
             <div>
               <label
                 htmlFor="edit-task-status"
-                className="mb-1 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700"
               >
                 Status
               </label>
 
-              <select
-                id="edit-task-status"
-                value={status}
-                onChange={(event) =>
-                  setStatus(event.target.value as TaskStatus)
-                }
-                className="w-full rounded-lg border border-zinc-300 px-3 py-2"
-              >
-                <option value="Todo">Todo</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="edit-task-status"
+                  value={status}
+                  onChange={(event) =>
+                    setStatus(event.target.value as TaskStatus)
+                  }
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                >
+                  <option value="Todo">Todo</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+
+                <ChevronDown
+                  size={16}
+                  className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
+                />
+              </div>
             </div>
 
             <div>
               <label
                 htmlFor="edit-task-priority"
-                className="mb-1 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700"
               >
                 Priority
               </label>
 
-              <select
-                id="edit-task-priority"
-                value={priority}
-                onChange={(event) =>
-                  setPriority(event.target.value as TaskPriority)
-                }
-                className="w-full rounded-lg border border-zinc-300 px-3 py-2"
-              >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="edit-task-priority"
+                  value={priority}
+                  onChange={(event) =>
+                    setPriority(event.target.value as TaskPriority)
+                  }
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                >
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+
+                <ChevronDown
+                  size={16}
+                  className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
+                />
+              </div>
             </div>
           </div>
 
           <div>
             <label
               htmlFor="edit-task-date"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
               Due Date
             </label>
@@ -132,14 +161,14 @@ function EditTaskModal({
               type="date"
               value={dueDate}
               onChange={(event) => setDueDate(event.target.value)}
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
           <div>
             <label
               htmlFor="edit-task-assignee"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
               Assignee
             </label>
@@ -149,7 +178,7 @@ function EditTaskModal({
               type="text"
               value={assignee}
               onChange={(event) => setAssignee(event.target.value)}
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
@@ -159,18 +188,18 @@ function EditTaskModal({
             </p>
           )}
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
+              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700"
+              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700"
             >
               Save Changes
             </button>

@@ -1,123 +1,138 @@
 import { useState, type FormEvent } from "react";
 import { ChevronDown } from "lucide-react";
 
-type ProjectStatus = "Active" | "Completed" | "On Hold";
+type TeamRole = "Admin" | "Member";
 
-type Project = {
-  id: number;
-  title: string;
-  description: string;
-  status: ProjectStatus;
-};
-
-type EditProjectModalProps = {
-  project: Project;
+type AddMemberModalProps = {
+  isOpen: boolean;
   onClose: () => void;
-  onSave: (project: Project) => void;
+  onAdd: (
+    name: string,
+    email: string,
+    role: TeamRole,
+  ) => void;
 };
 
-function EditProjectModal({
-  project,
+function AddMemberModal({
+  isOpen,
   onClose,
-  onSave,
-}: EditProjectModalProps) {
-  const [title, setTitle] = useState(project.title);
-  const [description, setDescription] = useState(project.description);
-  const [status, setStatus] = useState<ProjectStatus>(project.status);
+  onAdd,
+}: AddMemberModalProps) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState<TeamRole>("Member");
   const [error, setError] = useState("");
+
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setRole("Member");
+    setError("");
+  };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!title.trim() || !description.trim()) {
-      setError("Title and description are required.");
+    if (!name.trim() || !email.trim()) {
+      setError("Name and email are required.");
       return;
     }
 
-    onSave({
-      ...project,
-      title: title.trim(),
-      description: description.trim(),
-      status,
-    });
+    onAdd(
+      name.trim(),
+      email.trim(),
+      role,
+    );
+
+    resetForm();
   };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6">
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby="edit-project-title"
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
+        aria-labelledby="add-member-title"
+        className="w-full max-w-lg rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
       >
         <div className="mb-6">
           <h2
-            id="edit-project-title"
+            id="add-member-title"
             className="text-xl font-semibold text-zinc-950"
           >
-            Edit Project
+            Add Member
           </h2>
 
           <p className="mt-1 text-sm text-zinc-500">
-            Update your project information.
+            Add a new member to your team.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
-              htmlFor="edit-project-name"
+              htmlFor="member-name"
               className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
-              Title
+              Name
             </label>
 
             <input
-              id="edit-project-name"
+              id="member-name"
               type="text"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              placeholder="Full name"
               className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
           <div>
             <label
-              htmlFor="edit-project-description"
+              htmlFor="member-email"
               className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
-              Description
+              Email
             </label>
 
-            <textarea
-              id="edit-project-description"
-              rows={4}
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              className="min-h-28 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+            <input
+              id="member-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              placeholder="email@example.com"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
           <div>
             <label
-              htmlFor="edit-project-status"
+              htmlFor="member-role"
               className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
-              Status
+              Role
             </label>
 
             <div className="relative">
               <select
-                id="edit-project-status"
-                value={status}
+                id="member-role"
+                value={role}
                 onChange={(event) =>
-                  setStatus(event.target.value as ProjectStatus)
+                  setRole(event.target.value as TeamRole)
                 }
                 className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
               >
-                <option value="Active">Active</option>
-                <option value="On Hold">On Hold</option>
-                <option value="Completed">Completed</option>
+                <option value="Member">Member</option>
+                <option value="Admin">Admin</option>
               </select>
 
               <ChevronDown
@@ -136,7 +151,7 @@ function EditProjectModal({
           <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
             >
               Cancel
@@ -146,7 +161,7 @@ function EditProjectModal({
               type="submit"
               className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700"
             >
-              Save Changes
+              Add Member
             </button>
           </div>
         </form>
@@ -155,4 +170,4 @@ function EditProjectModal({
   );
 }
 
-export default EditProjectModal;
+export default AddMemberModal;

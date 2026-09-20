@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { ChevronDown } from "lucide-react";
 
 type TaskStatus = "Todo" | "In Progress" | "Completed";
 type TaskPriority = "Low" | "Medium" | "High";
@@ -65,12 +66,12 @@ function NewTaskModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-6">
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="new-task-title"
-        className="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
       >
         <div className="mb-6">
           <h2
@@ -89,7 +90,7 @@ function NewTaskModal({
           <div>
             <label
               htmlFor="task-title"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
               Title
             </label>
@@ -99,8 +100,8 @@ function NewTaskModal({
               type="text"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
               placeholder="Task title"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
@@ -108,52 +109,66 @@ function NewTaskModal({
             <div>
               <label
                 htmlFor="task-status"
-                className="mb-1 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700"
               >
                 Status
               </label>
 
-              <select
-                id="task-status"
-                value={status}
-                onChange={(event) =>
-                  setStatus(event.target.value as TaskStatus)
-                }
-                className="w-full rounded-lg border border-zinc-300 px-3 py-2"
-              >
-                <option value="Todo">Todo</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="task-status"
+                  value={status}
+                  onChange={(event) =>
+                    setStatus(event.target.value as TaskStatus)
+                  }
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                >
+                  <option value="Todo">Todo</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+
+                <ChevronDown
+                  size={16}
+                  className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
+                />
+              </div>
             </div>
 
             <div>
               <label
                 htmlFor="task-priority"
-                className="mb-1 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700"
               >
                 Priority
               </label>
 
-              <select
-                id="task-priority"
-                value={priority}
-                onChange={(event) =>
-                  setPriority(event.target.value as TaskPriority)
-                }
-                className="w-full rounded-lg border border-zinc-300 px-3 py-2"
-              >
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-              </select>
+              <div className="relative">
+                <select
+                  id="task-priority"
+                  value={priority}
+                  onChange={(event) =>
+                    setPriority(event.target.value as TaskPriority)
+                  }
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                >
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+
+                <ChevronDown
+                  size={16}
+                  className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
+                />
+              </div>
             </div>
           </div>
 
           <div>
             <label
               htmlFor="task-due-date"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
               Due Date
             </label>
@@ -163,14 +178,14 @@ function NewTaskModal({
               type="date"
               value={dueDate}
               onChange={(event) => setDueDate(event.target.value)}
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
           <div>
             <label
               htmlFor="task-assignee"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
               Assignee
             </label>
@@ -180,8 +195,8 @@ function NewTaskModal({
               type="text"
               value={assignee}
               onChange={(event) => setAssignee(event.target.value)}
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2"
               placeholder="Assigned team member"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
@@ -191,18 +206,18 @@ function NewTaskModal({
             </p>
           )}
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={handleClose}
-              className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium"
+              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white"
+              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700"
             >
               Create Task
             </button>

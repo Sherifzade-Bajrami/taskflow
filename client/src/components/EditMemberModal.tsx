@@ -1,44 +1,44 @@
 import { useState, type FormEvent } from "react";
 import { ChevronDown } from "lucide-react";
 
-type ProjectStatus = "Active" | "Completed" | "On Hold";
+type TeamRole = "Admin" | "Member";
 
-type Project = {
+type TeamMember = {
   id: number;
-  title: string;
-  description: string;
-  status: ProjectStatus;
+  name: string;
+  email: string;
+  role: TeamRole;
 };
 
-type EditProjectModalProps = {
-  project: Project;
+type EditMemberModalProps = {
+  member: TeamMember;
   onClose: () => void;
-  onSave: (project: Project) => void;
+  onSave: (member: TeamMember) => void;
 };
 
-function EditProjectModal({
-  project,
+function EditMemberModal({
+  member,
   onClose,
   onSave,
-}: EditProjectModalProps) {
-  const [title, setTitle] = useState(project.title);
-  const [description, setDescription] = useState(project.description);
-  const [status, setStatus] = useState<ProjectStatus>(project.status);
+}: EditMemberModalProps) {
+  const [name, setName] = useState(member.name);
+  const [email, setEmail] = useState(member.email);
+  const [role, setRole] = useState<TeamRole>(member.role);
   const [error, setError] = useState("");
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!title.trim() || !description.trim()) {
-      setError("Title and description are required.");
+    if (!name.trim() || !email.trim()) {
+      setError("Name and email are required.");
       return;
     }
 
     onSave({
-      ...project,
-      title: title.trim(),
-      description: description.trim(),
-      status,
+      ...member,
+      name: name.trim(),
+      email: email.trim(),
+      role,
     });
   };
 
@@ -47,77 +47,76 @@ function EditProjectModal({
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby="edit-project-title"
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
+        aria-labelledby="edit-member-title"
+        className="w-full max-w-lg rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
       >
         <div className="mb-6">
           <h2
-            id="edit-project-title"
+            id="edit-member-title"
             className="text-xl font-semibold text-zinc-950"
           >
-            Edit Project
+            Edit Member
           </h2>
 
           <p className="mt-1 text-sm text-zinc-500">
-            Update your project information.
+            Update this team member&apos;s information.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
-              htmlFor="edit-project-name"
+              htmlFor="edit-member-name"
               className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
-              Title
+              Name
             </label>
 
             <input
-              id="edit-project-name"
+              id="edit-member-name"
               type="text"
-              value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
           <div>
             <label
-              htmlFor="edit-project-description"
+              htmlFor="edit-member-email"
               className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
-              Description
+              Email
             </label>
 
-            <textarea
-              id="edit-project-description"
-              rows={4}
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              className="min-h-28 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+            <input
+              id="edit-member-email"
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
             />
           </div>
 
           <div>
             <label
-              htmlFor="edit-project-status"
+              htmlFor="edit-member-role"
               className="mb-1.5 block text-sm font-medium text-zinc-700"
             >
-              Status
+              Role
             </label>
 
             <div className="relative">
               <select
-                id="edit-project-status"
-                value={status}
+                id="edit-member-role"
+                value={role}
                 onChange={(event) =>
-                  setStatus(event.target.value as ProjectStatus)
+                  setRole(event.target.value as TeamRole)
                 }
                 className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
               >
-                <option value="Active">Active</option>
-                <option value="On Hold">On Hold</option>
-                <option value="Completed">Completed</option>
+                <option value="Member">Member</option>
+                <option value="Admin">Admin</option>
               </select>
 
               <ChevronDown
@@ -155,4 +154,4 @@ function EditProjectModal({
   );
 }
 
-export default EditProjectModal;
+export default EditMemberModal;

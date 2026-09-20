@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { ChevronDown } from "lucide-react";
 
 type ProjectStatus = "Active" | "Completed" | "On Hold";
 
@@ -44,23 +45,18 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="new-project-title"
-        className="w-full max-w-lg rounded-xl bg-white p-6 shadow-xl"
+        className="w-full max-w-lg rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
       >
         <div className="mb-6">
-          <h2
-            id="new-project-title"
-            className="text-xl font-semibold text-zinc-950"
-          >
-            New Project
-          </h2>
+          <h2 className="text-xl font-semibold text-zinc-950">New Project</h2>
 
           <p className="mt-1 text-sm text-zinc-500">
-            Create a new project for your team.
+            Create a new project for your workspace.
           </p>
         </div>
 
@@ -78,7 +74,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
               type="text"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
               placeholder="Project title"
             />
           </div>
@@ -96,7 +92,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
               rows={4}
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              className="w-full resize-none rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
+              className="min-h-28 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
               placeholder="Project description"
             />
           </div>
@@ -109,33 +105,38 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
               Status
             </label>
 
-            <select
-              id="project-status"
-              value={status}
-              onChange={(event) =>
-                setStatus(event.target.value as ProjectStatus)
-              }
-              className="w-full rounded-lg border border-zinc-300 px-3 py-2 outline-none focus:border-zinc-900"
-            >
-              <option value="Active">Active</option>
-              <option value="On Hold">On Hold</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </div>
-          {error && <p className="text-sm font-medium text-red-600">{error}</p>}
+            <div className="relative">
+              <select
+                value={status}
+                onChange={(event) =>
+                  setStatus(event.target.value as ProjectStatus)
+                }
+                className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              >
+                <option value="Active">Active</option>
+                <option value="On Hold">On Hold</option>
+                <option value="Completed">Completed</option>
+              </select>
 
-          <div className="flex justify-end gap-3 pt-2">
+              <ChevronDown
+                size={16}
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
+              />
+            </div>
+          </div>
+          {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+          <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={handleClose}
-              className="rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-50"
+              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-700"
+              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700"
             >
               Create Project
             </button>

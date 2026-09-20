@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import NewTaskModal from "../components/NewTaskModal";
 import EditTaskModal from "../components/EditTaskModal";
 import TaskCard from "../components/TaskCard";
@@ -70,21 +71,17 @@ function TasksPage() {
     setIsNewTaskOpen(false);
   };
   const handleUpdateTask = (updatedTask: Task) => {
-  setTasks((currentTasks) =>
-    currentTasks.map((task) =>
-      task.id === updatedTask.id
-        ? updatedTask
-        : task
-    )
-  );
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === updatedTask.id ? updatedTask : task,
+      ),
+    );
 
-  setSelectedTask(null);
-};
+    setSelectedTask(null);
+  };
   const handleDeleteTask = (id: number) => {
-  setTasks((currentTasks) =>
-    currentTasks.filter((task) => task.id !== id)
-  );
-};
+    setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id));
+  };
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch = task.title
       .toLowerCase()
@@ -97,46 +94,58 @@ function TasksPage() {
   });
   return (
     <main>
-      <div className="flex items-start justify-between gap-6">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="text-3xl font-semibold text-zinc-950">Tasks</h1>
+          <p className="text-sm font-medium text-violet-600">Tasks</p>
 
-          <p className="mt-2 text-zinc-600">
-            Track and manage your team&apos;s work.
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-950">
+            Manage tasks
+          </h1>
+
+          <p className="mt-2 text-zinc-500">
+            Plan, assign and track your team&apos;s work.
           </p>
         </div>
 
         <button
           type="button"
           onClick={() => setIsNewTaskOpen(true)}
-          className="rounded-lg bg-zinc-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-700"
+          className="w-full rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700 sm:w-auto"
         >
           New Task
         </button>
       </div>
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+      <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:flex-row">
         <input
           type="search"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search tasks..."
-          className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:border-zinc-900 sm:max-w-sm"
+          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 sm:max-w-sm"
         />
 
-        <select
-          value={statusFilter}
-          onChange={(event) =>
-            setStatusFilter(event.target.value as "All" | TaskStatus)
-          }
-          className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:border-zinc-900"
-        >
-          <option value="All">All statuses</option>
-          <option value="Todo">Todo</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option>
-        </select>
+        <div className="relative w-full sm:w-auto">
+          <select
+            value={statusFilter}
+            onChange={(event) =>
+              setStatusFilter(event.target.value as "All" | TaskStatus)
+            }
+            className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+          >
+            <option value="All">All statuses</option>
+            <option value="Todo">Todo</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+          </select>
+
+          <ChevronDown
+            size={16}
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
+          />
+        </div>
       </div>
-      <section className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+        {" "}
         {filteredTasks.length === 0 && (
           <p className="text-sm text-zinc-500">No tasks found.</p>
         )}
