@@ -2,11 +2,14 @@ import {
   CheckSquare,
   FolderKanban,
   LayoutDashboard,
+  LogOut,
   Settings,
   Users,
   X,
 } from "lucide-react";
 import { NavLink } from "react-router";
+import { useNavigate } from "react-router";
+import { useAuth } from "../../context/AuthContext";
 
 type SidebarProps = {
   isOpen: boolean;
@@ -36,10 +39,16 @@ const menuItems = [
   },
 ];
 
-function Sidebar({
-  isOpen,
-  onClose,
-}: SidebarProps) {
+function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    onClose();
+    navigate("/login");
+  };
+
   return (
     <>
       {isOpen && (
@@ -67,9 +76,7 @@ function Sidebar({
                 TaskFlow
               </p>
 
-              <p className="text-xs text-zinc-400">
-                Team workspace
-              </p>
+              <p className="text-xs text-zinc-400">Team workspace</p>
             </div>
           </div>
 
@@ -124,6 +131,14 @@ function Sidebar({
             <Settings size={18} />
             Settings
           </button>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
 
           <div className="mt-3 flex items-center gap-3 rounded-xl bg-zinc-50 p-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white">
@@ -135,9 +150,7 @@ function Sidebar({
                 Sherifzade
               </p>
 
-              <p className="text-xs text-zinc-500">
-                Admin
-              </p>
+              <p className="text-xs text-zinc-500">Admin</p>
             </div>
           </div>
         </div>

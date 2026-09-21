@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddMemberModal from "../components/AddMemberModal";
 import EditMemberModal from "../components/EditMemberModal";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import TeamMemberCard from "../components/TeamMemberCard";
 
 type TeamRole = "Admin" | "Member";
@@ -54,6 +55,7 @@ function TeamPage() {
       currentMembers.filter((member) => member.id !== id),
     );
   };
+  const [memberToDelete, setMemberToDelete] = useState<TeamMember | null>(null);
 
   const handleAddMember = (name: string, email: string, role: TeamRole) => {
     const newMember: TeamMember = {
@@ -100,7 +102,7 @@ function TeamPage() {
             email={member.email}
             role={member.role}
             onEdit={() => setSelectedMember(member)}
-            onDelete={() => handleDeleteMember(member.id)}
+            onDelete={() => setMemberToDelete(member)}
           />
         ))}
       </section>
@@ -114,6 +116,18 @@ function TeamPage() {
           member={selectedMember}
           onClose={() => setSelectedMember(null)}
           onSave={handleUpdateMember}
+        />
+      )}
+      {memberToDelete && (
+        <ConfirmDeleteModal
+          isOpen={true}
+          title="Remove member?"
+          description={`Are you sure you want to remove "${memberToDelete.name}" from the team?`}
+          onCancel={() => setMemberToDelete(null)}
+          onConfirm={() => {
+            handleDeleteMember(memberToDelete.id);
+            setMemberToDelete(null);
+          }}
         />
       )}
     </main>

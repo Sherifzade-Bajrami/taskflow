@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import NewProjectModal from "../components/NewProjectModal";
 import EditProjectModal from "../components/EditProjectModal";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import ProjectCard from "../components/ProjectCard";
 
 type ProjectStatus = "Active" | "Completed" | "On Hold";
@@ -73,6 +74,7 @@ function ProjectsPage() {
       currentProjects.filter((project) => project.id !== id),
     );
   };
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
 
   const filteredProjects = projects.filter((project) => {
     const matchesSearch = project.title
@@ -145,7 +147,7 @@ function ProjectsPage() {
             description={project.description}
             status={project.status}
             onEdit={() => setSelectedProject(project)}
-            onDelete={() => handleDeleteProject(project.id)}
+            onDelete={() => setProjectToDelete(project)}
           />
         ))}
       </section>
@@ -159,6 +161,18 @@ function ProjectsPage() {
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
           onSave={handleUpdateProject}
+        />
+      )}
+      {projectToDelete && (
+        <ConfirmDeleteModal
+          isOpen={true}
+          title="Delete project?"
+          description={`Are you sure you want to delete "${projectToDelete.title}"? This action cannot be undone.`}
+          onCancel={() => setProjectToDelete(null)}
+          onConfirm={() => {
+            handleDeleteProject(projectToDelete.id);
+            setProjectToDelete(null);
+          }}
         />
       )}
     </main>

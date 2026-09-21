@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import NewTaskModal from "../components/NewTaskModal";
 import EditTaskModal from "../components/EditTaskModal";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 import TaskCard from "../components/TaskCard";
 
 type TaskStatus = "Todo" | "In Progress" | "Completed";
@@ -82,6 +83,7 @@ function TasksPage() {
   const handleDeleteTask = (id: number) => {
     setTasks((currentTasks) => currentTasks.filter((task) => task.id !== id));
   };
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch = task.title
       .toLowerCase()
@@ -158,7 +160,7 @@ function TasksPage() {
             dueDate={task.dueDate}
             assignee={task.assignee}
             onEdit={() => setSelectedTask(task)}
-            onDelete={() => handleDeleteTask(task.id)}
+            onDelete={() => setTaskToDelete(task)}
           />
         ))}
       </section>
@@ -172,6 +174,18 @@ function TasksPage() {
           task={selectedTask}
           onClose={() => setSelectedTask(null)}
           onSave={handleUpdateTask}
+        />
+      )}
+      {taskToDelete && (
+        <ConfirmDeleteModal
+          isOpen={true}
+          title="Delete task?"
+          description={`Are you sure you want to delete "${taskToDelete.title}"? This action cannot be undone.`}
+          onCancel={() => setTaskToDelete(null)}
+          onConfirm={() => {
+            handleDeleteTask(taskToDelete.id);
+            setTaskToDelete(null);
+          }}
         />
       )}
     </main>
