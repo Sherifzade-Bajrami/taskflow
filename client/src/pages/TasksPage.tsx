@@ -98,13 +98,15 @@ function TasksPage() {
     <main>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium text-violet-600">Tasks</p>
+          <p className="text-sm font-medium text-violet-600 dark:text-violet-400">
+            Tasks
+          </p>
 
-          <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-950">
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-950 dark:text-white">
             Manage tasks
           </h1>
 
-          <p className="mt-2 text-zinc-500">
+          <p className="mt-2 text-zinc-500 dark:text-zinc-400">
             Plan, assign and track your team&apos;s work.
           </p>
         </div>
@@ -117,22 +119,22 @@ function TasksPage() {
           New Task
         </button>
       </div>
-      <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:flex-row">
+      <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:flex-row">
+        {" "}
         <input
           type="search"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search tasks..."
-          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 sm:max-w-sm"
+          className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950 sm:max-w-sm"
         />
-
         <div className="relative w-full sm:w-auto">
           <select
             value={statusFilter}
             onChange={(event) =>
               setStatusFilter(event.target.value as "All" | TaskStatus)
             }
-            className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+            className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm text-zinc-900 outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
           >
             <option value="All">All statuses</option>
             <option value="Todo">Todo</option>
@@ -142,14 +144,21 @@ function TasksPage() {
 
           <ChevronDown
             size={16}
-            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400"
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 dark:text-zinc-500"
           />
         </div>
       </div>
       <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {" "}
         {filteredTasks.length === 0 && (
-          <p className="text-sm text-zinc-500">No tasks found.</p>
+          <div className="mt-6 rounded-2xl border border-dashed border-zinc-300 bg-white p-8 text-center dark:border-zinc-700 dark:bg-zinc-900">
+            <p className="font-medium text-zinc-900 dark:text-white">
+              No tasks found
+            </p>
+
+            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+              Try changing your search or status filter.
+            </p>
+          </div>
         )}
         {filteredTasks.map((task) => (
           <TaskCard

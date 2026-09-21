@@ -19,11 +19,7 @@ type EditTaskModalProps = {
   onSave: (task: Task) => void;
 };
 
-function EditTaskModal({
-  task,
-  onClose,
-  onSave,
-}: EditTaskModalProps) {
+function EditTaskModal({ task, onClose, onSave }: EditTaskModalProps) {
   const [title, setTitle] = useState(task.title);
   const [status, setStatus] = useState<TaskStatus>(task.status);
   const [priority, setPriority] = useState<TaskPriority>(task.priority);
@@ -55,17 +51,17 @@ function EditTaskModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="edit-task-title"
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
       >
         <div className="mb-6">
           <h2
             id="edit-task-title"
-            className="text-xl font-semibold text-zinc-950"
+            className="text-xl font-semibold text-zinc-950 dark:text-white"
           >
             Edit Task
           </h2>
 
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
             Update this task&apos;s information.
           </p>
         </div>
@@ -74,7 +70,7 @@ function EditTaskModal({
           <div>
             <label
               htmlFor="edit-task-name"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Title
             </label>
@@ -84,7 +80,7 @@ function EditTaskModal({
               type="text"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
             />
           </div>
 
@@ -92,7 +88,7 @@ function EditTaskModal({
             <div>
               <label
                 htmlFor="edit-task-status"
-                className="mb-1.5 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
               >
                 Status
               </label>
@@ -104,7 +100,7 @@ function EditTaskModal({
                   onChange={(event) =>
                     setStatus(event.target.value as TaskStatus)
                   }
-                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
                 >
                   <option value="Todo">Todo</option>
                   <option value="In Progress">In Progress</option>
@@ -121,7 +117,7 @@ function EditTaskModal({
             <div>
               <label
                 htmlFor="edit-task-priority"
-                className="mb-1.5 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
               >
                 Priority
               </label>
@@ -133,7 +129,7 @@ function EditTaskModal({
                   onChange={(event) =>
                     setPriority(event.target.value as TaskPriority)
                   }
-                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
                 >
                   <option value="Low">Low</option>
                   <option value="Medium">Medium</option>
@@ -151,7 +147,7 @@ function EditTaskModal({
           <div>
             <label
               htmlFor="edit-task-date"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Due Date
             </label>
@@ -161,14 +157,14 @@ function EditTaskModal({
               type="date"
               value={dueDate}
               onChange={(event) => setDueDate(event.target.value)}
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
             />
           </div>
 
           <div>
             <label
               htmlFor="edit-task-assignee"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Assignee
             </label>
@@ -178,21 +174,17 @@ function EditTaskModal({
               type="text"
               value={assignee}
               onChange={(event) => setAssignee(event.target.value)}
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
             />
           </div>
 
-          {error && (
-            <p className="text-sm font-medium text-red-600">
-              {error}
-            </p>
-          )}
+          {error && <p className="text-sm font-medium text-red-600">{error}</p>}
 
           <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white"
             >
               Cancel
             </button>

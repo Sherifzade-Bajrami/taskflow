@@ -61,7 +61,7 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
       )}
 
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-zinc-200 bg-white transition-transform duration-200 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-zinc-200 bg-white transition-all duration-200 dark:border-zinc-800 dark:bg-zinc-950 md:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -72,11 +72,12 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
             </div>
 
             <div>
-              <p className="text-lg font-bold tracking-tight text-zinc-950">
+              <p className="text-lg font-bold tracking-tight text-zinc-950 dark:text-white">
                 TaskFlow
               </p>
-
-              <p className="text-xs text-zinc-400">Team workspace</p>
+              <p className="text-xs text-zinc-400 dark:text-zinc-500">
+                Team workspace
+              </p>
             </div>
           </div>
 
@@ -91,7 +92,7 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
         </div>
 
         <nav className="flex-1 px-4">
-          <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+          <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
             Overview
           </p>
 
@@ -108,8 +109,8 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
                     className={({ isActive }) =>
                       `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
                         isActive
-                          ? "bg-violet-50 text-violet-700"
-                          : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950"
+                          ? "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-400"
+                          : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white"
                       }`
                     }
                   >
@@ -124,13 +125,20 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
         </nav>
 
         <div className="border-t border-zinc-100 p-4">
-          <button
-            type="button"
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-50 hover:text-zinc-950"
-          >
-            <Settings size={18} />
-            Settings
-          </button>
+          <NavLink
+  to="/settings"
+  onClick={onClose}
+  className={({ isActive }) =>
+    `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+      isActive
+        ? "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-400"
+        : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-900 dark:hover:text-white"
+    }`
+  }
+>
+  <Settings size={18} />
+  Settings
+</NavLink>
           <button
             type="button"
             onClick={handleLogout}
@@ -140,17 +148,16 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
             Logout
           </button>
 
-          <div className="mt-3 flex items-center gap-3 rounded-xl bg-zinc-50 p-3">
+          <div className="mt-3 flex items-center gap-3 rounded-xl bg-zinc-50 p-3 dark:bg-zinc-900">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white">
               S
             </div>
 
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-zinc-900">
+              <p className="truncate text-sm font-medium text-zinc-900 dark:text-white">
                 Sherifzade
               </p>
-
-              <p className="text-xs text-zinc-500">Admin</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Admin</p>
             </div>
           </div>
         </div>

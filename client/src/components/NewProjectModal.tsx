@@ -50,12 +50,11 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
         role="dialog"
         aria-modal="true"
         aria-labelledby="new-project-title"
-        className="w-full max-w-lg rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
-      >
+className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"      >
         <div className="mb-6">
-          <h2 className="text-xl font-semibold text-zinc-950">New Project</h2>
+          <h2 className="text-xl font-semibold text-zinc-950 dark:text-white">New Project</h2>
 
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
             Create a new project for your workspace.
           </p>
         </div>
@@ -64,7 +63,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
           <div>
             <label
               htmlFor="project-title"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Title
             </label>
@@ -74,7 +73,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
               type="text"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
               placeholder="Project title"
             />
           </div>
@@ -82,7 +81,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
           <div>
             <label
               htmlFor="project-description"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Description
             </label>
@@ -92,7 +91,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
               rows={4}
               value={description}
               onChange={(event) => setDescription(event.target.value)}
-              className="min-h-28 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="min-h-28 w-full resize-none rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
               placeholder="Project description"
             />
           </div>
@@ -100,7 +99,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
           <div>
             <label
               htmlFor="project-status"
-              className="mb-1 block text-sm font-medium text-zinc-700"
+              className="mb-1 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Status
             </label>
@@ -111,7 +110,7 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
                 onChange={(event) =>
                   setStatus(event.target.value as ProjectStatus)
                 }
-                className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
               >
                 <option value="Active">Active</option>
                 <option value="On Hold">On Hold</option>
@@ -129,14 +128,14 @@ function NewProjectModal({ isOpen, onClose, onCreate }: NewProjectModalProps) {
             <button
               type="button"
               onClick={handleClose}
-              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-600"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700"
+              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700 dark:hover:bg-violet-800"
             >
               Create Project
             </button>

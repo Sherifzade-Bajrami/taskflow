@@ -73,13 +73,15 @@ function TeamPage() {
     <main>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm font-medium text-violet-600">Team</p>
+          <p className="text-sm font-medium text-violet-600 dark:text-violet-400">
+            Team
+          </p>
 
-          <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-950">
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-zinc-950 dark:text-white">
             Manage team
           </h1>
 
-          <p className="mt-2 text-zinc-500">
+          <p className="mt-2 text-zinc-500 dark:text-zinc-400">
             Add and manage people across your workspace.
           </p>
         </div>

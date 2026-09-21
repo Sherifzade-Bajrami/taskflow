@@ -62,17 +62,17 @@ function AddMemberModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="add-member-title"
-        className="w-full max-w-lg rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
-      >
+className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"      >
         <div className="mb-6">
           <h2
             id="add-member-title"
-            className="text-xl font-semibold text-zinc-950"
+            className="text-xl font-semibold text-zinc-950 dark:text-white"
           >
             Add Member
           </h2>
 
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+
             Add a new member to your team.
           </p>
         </div>
@@ -81,7 +81,7 @@ function AddMemberModal({
           <div>
             <label
               htmlFor="member-name"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Name
             </label>
@@ -92,14 +92,14 @@ function AddMemberModal({
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Full name"
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
             />
           </div>
 
           <div>
             <label
               htmlFor="member-email"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Email
             </label>
@@ -110,14 +110,14 @@ function AddMemberModal({
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="email@example.com"
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
             />
           </div>
 
           <div>
             <label
               htmlFor="member-role"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Role
             </label>
@@ -129,7 +129,7 @@ function AddMemberModal({
                 onChange={(event) =>
                   setRole(event.target.value as TeamRole)
                 }
-                className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
               >
                 <option value="Member">Member</option>
                 <option value="Admin">Admin</option>
@@ -143,7 +143,7 @@ function AddMemberModal({
           </div>
 
           {error && (
-            <p className="text-sm font-medium text-red-600">
+            <p className="text-sm font-medium text-red-600 dark:text-red-400">
               {error}
             </p>
           )}
@@ -152,14 +152,14 @@ function AddMemberModal({
             <button
               type="button"
               onClick={handleClose}
-              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-600"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700"
+              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700 dark:hover:bg-violet-800"
             >
               Add Member
             </button>

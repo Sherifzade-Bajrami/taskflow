@@ -8,7 +8,7 @@ function AppLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#f8f8fa]">
+    <div className="min-h-screen bg-[#f8f8fa] transition-colors dark:bg-zinc-950">
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       <div className="min-h-screen md:ml-64">

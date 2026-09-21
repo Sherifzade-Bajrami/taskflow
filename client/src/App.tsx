@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import DashboardPage from "./pages/DashboardPage";
+import SettingsPage from "./pages/SettingsPage";
 import ProjectsPage from "./pages/ProjectsPage";
 import TasksPage from "./pages/TasksPage";
 import TeamPage from "./pages/TeamPage";
@@ -24,6 +25,7 @@ function App() {
         }
       >
         <Route index element={<DashboardPage />} />
+        <Route path="settings" element={<SettingsPage />} />
 
         <Route path="projects" element={<ProjectsPage />} />
 

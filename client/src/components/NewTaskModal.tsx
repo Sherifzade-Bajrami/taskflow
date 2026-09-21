@@ -16,11 +16,7 @@ type NewTaskModalProps = {
   ) => void;
 };
 
-function NewTaskModal({
-  isOpen,
-  onClose,
-  onCreate,
-}: NewTaskModalProps) {
+function NewTaskModal({ isOpen, onClose, onCreate }: NewTaskModalProps) {
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState<TaskStatus>("Todo");
   const [priority, setPriority] = useState<TaskPriority>("Medium");
@@ -45,13 +41,7 @@ function NewTaskModal({
       return;
     }
 
-    onCreate(
-      title.trim(),
-      status,
-      priority,
-      dueDate,
-      assignee.trim(),
-    );
+    onCreate(title.trim(), status, priority, dueDate, assignee.trim());
 
     resetForm();
   };
@@ -71,17 +61,17 @@ function NewTaskModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="new-task-title"
-        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl"
+        className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-zinc-200 bg-white p-6 shadow-xl dark:border-zinc-800 dark:bg-zinc-900"
       >
         <div className="mb-6">
           <h2
             id="new-task-title"
-            className="text-xl font-semibold text-zinc-950"
+            className="text-xl font-semibold text-zinc-950 dark:text-white"
           >
             New Task
           </h2>
 
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
             Create a new task for your team.
           </p>
         </div>
@@ -90,7 +80,7 @@ function NewTaskModal({
           <div>
             <label
               htmlFor="task-title"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Title
             </label>
@@ -101,15 +91,14 @@ function NewTaskModal({
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               placeholder="Task title"
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
-            />
+className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"            />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label
                 htmlFor="task-status"
-                className="mb-1.5 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
               >
                 Status
               </label>
@@ -121,7 +110,7 @@ function NewTaskModal({
                   onChange={(event) =>
                     setStatus(event.target.value as TaskStatus)
                   }
-                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
                 >
                   <option value="Todo">Todo</option>
                   <option value="In Progress">In Progress</option>
@@ -138,7 +127,7 @@ function NewTaskModal({
             <div>
               <label
                 htmlFor="task-priority"
-                className="mb-1.5 block text-sm font-medium text-zinc-700"
+                className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
               >
                 Priority
               </label>
@@ -150,7 +139,7 @@ function NewTaskModal({
                   onChange={(event) =>
                     setPriority(event.target.value as TaskPriority)
                   }
-                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+                  className="w-full appearance-none rounded-xl border border-zinc-200 bg-zinc-50 py-2.5 pl-3 pr-10 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
                 >
                   <option value="Low">Low</option>
                   <option value="Medium">Medium</option>
@@ -168,7 +157,7 @@ function NewTaskModal({
           <div>
             <label
               htmlFor="task-due-date"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Due Date
             </label>
@@ -178,14 +167,14 @@ function NewTaskModal({
               type="date"
               value={dueDate}
               onChange={(event) => setDueDate(event.target.value)}
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
             />
           </div>
 
           <div>
             <label
               htmlFor="task-assignee"
-              className="mb-1.5 block text-sm font-medium text-zinc-700"
+              className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300"
             >
               Assignee
             </label>
@@ -196,28 +185,24 @@ function NewTaskModal({
               value={assignee}
               onChange={(event) => setAssignee(event.target.value)}
               placeholder="Assigned team member"
-              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm outline-none transition focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100"
+              className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950"
             />
           </div>
 
-          {error && (
-            <p className="text-sm font-medium text-red-600">
-              {error}
-            </p>
-          )}
+          {error && <p className="text-sm font-medium text-red-600">{error}</p>}
 
           <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={handleClose}
-              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+              className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-600"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700"
+              className="rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700 dark:hover:bg-violet-800"
             >
               Create Task
             </button>
