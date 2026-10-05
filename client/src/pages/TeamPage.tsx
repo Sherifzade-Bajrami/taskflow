@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Users } from "lucide-react";
+import EmptyState from "../components/EmptyState";
 import AddMemberModal from "../components/AddMemberModal";
 import EditMemberModal from "../components/EditMemberModal";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
@@ -95,19 +97,28 @@ function TeamPage() {
         </button>
       </div>
 
-      <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {" "}
-        {teamMembers.map((member) => (
-          <TeamMemberCard
-            key={member.id}
-            name={member.name}
-            email={member.email}
-            role={member.role}
-            onEdit={() => setSelectedMember(member)}
-            onDelete={() => setMemberToDelete(member)}
+      {teamMembers.length > 0 ? (
+        <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {teamMembers.map((member) => (
+            <TeamMemberCard
+              key={member.id}
+              name={member.name}
+              email={member.email}
+              role={member.role}
+              onEdit={() => setSelectedMember(member)}
+              onDelete={() => setMemberToDelete(member)}
+            />
+          ))}
+        </section>
+      ) : (
+        <div className="mt-6">
+          <EmptyState
+            icon={Users}
+            title="No team members"
+            description="Add your first team member to start collaborating in TaskFlow."
           />
-        ))}
-      </section>
+        </div>
+      )}
       <AddMemberModal
         isOpen={isAddMemberOpen}
         onClose={() => setIsAddMemberOpen(false)}

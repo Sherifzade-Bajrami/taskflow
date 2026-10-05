@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronDown, FolderKanban } from "lucide-react";
+import { useSearchParams } from "react-router";
+
+import EmptyState from "../components/EmptyState";
 import NewProjectModal from "../components/NewProjectModal";
 import EditProjectModal from "../components/EditProjectModal";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
@@ -13,6 +16,7 @@ type Project = {
   description: string;
   status: ProjectStatus;
 };
+
 const initialProjects: Project[] = [
   {
     id: 1,
@@ -39,10 +43,24 @@ function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [isNewProjectOpen, setIsNewProjectOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
   const [statusFilter, setStatusFilter] = useState<"All" | ProjectStatus>(
     "All",
   );
+
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
+  useEffect(() => {
+    if (searchParams.get("new") === "1") {
+      setIsNewProjectOpen(true);
+
+      const nextParams = new URLSearchParams(searchParams);
+      nextParams.delete("new");
+
+      setSearchParams(nextParams, { replace: true });
+    }
+  }, [searchParams, setSearchParams]);
 
   const handleCreateProject = (
     title: string,
@@ -60,6 +78,7 @@ function ProjectsPage() {
 
     setIsNewProjectOpen(false);
   };
+
   const handleUpdateProject = (updatedProject: Project) => {
     setProjects((currentProjects) =>
       currentProjects.map((project) =>
@@ -69,12 +88,12 @@ function ProjectsPage() {
 
     setSelectedProject(null);
   };
+
   const handleDeleteProject = (id: number) => {
     setProjects((currentProjects) =>
       currentProjects.filter((project) => project.id !== id),
     );
   };
-  const [projectToDelete, setProjectToDelete] = useState<Project | null>(null);
 
   const filteredProjects = projects.filter((project) => {
     const matchesSearch = project.title
@@ -86,9 +105,10 @@ function ProjectsPage() {
 
     return matchesSearch && matchesStatus;
   });
+
   return (
     <main>
-      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-sm font-medium text-violet-600 dark:text-violet-400">
             Projects
@@ -111,8 +131,8 @@ function ProjectsPage() {
           New Project
         </button>
       </div>
+
       <div className="mt-8 flex flex-col gap-3 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900 sm:flex-row">
-        {" "}
         <input
           type="search"
           value={searchTerm}
@@ -120,6 +140,7 @@ function ProjectsPage() {
           placeholder="Search projects..."
           className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-violet-300 focus:bg-white focus:ring-4 focus:ring-violet-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-violet-500 dark:focus:bg-zinc-800 dark:focus:ring-violet-950 sm:max-w-sm"
         />
+
         <div className="relative w-full sm:w-auto">
           <select
             value={statusFilter}
@@ -141,34 +162,35 @@ function ProjectsPage() {
         </div>
       </div>
 
-      <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {filteredProjects.length === 0 && (
-          <div className="mt-6 rounded-2xl border border-dashed border-zinc-300 bg-white p-8 text-center dark:border-zinc-700 dark:bg-zinc-900">
-            <p className="font-medium text-zinc-900 dark:text-white">
-              No projects found
-            </p>
-
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-              Try changing your search or status filter.
-            </p>
-          </div>
-        )}
-        {filteredProjects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            title={project.title}
-            description={project.description}
-            status={project.status}
-            onEdit={() => setSelectedProject(project)}
-            onDelete={() => setProjectToDelete(project)}
+      {filteredProjects.length > 0 ? (
+        <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filteredProjects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              title={project.title}
+              description={project.description}
+              status={project.status}
+              onEdit={() => setSelectedProject(project)}
+              onDelete={() => setProjectToDelete(project)}
+            />
+          ))}
+        </section>
+      ) : (
+        <div className="mt-6">
+          <EmptyState
+            icon={FolderKanban}
+            title="No projects found"
+            description="Try changing your search or status filter, or create a new project."
           />
-        ))}
-      </section>
+        </div>
+      )}
+
       <NewProjectModal
         isOpen={isNewProjectOpen}
         onClose={() => setIsNewProjectOpen(false)}
         onCreate={handleCreateProject}
       />
+
       {selectedProject && (
         <EditProjectModal
           project={selectedProject}
@@ -176,6 +198,7 @@ function ProjectsPage() {
           onSave={handleUpdateProject}
         />
       )}
+
       {projectToDelete && (
         <ConfirmDeleteModal
           isOpen={true}
@@ -184,6 +207,7 @@ function ProjectsPage() {
           onCancel={() => setProjectToDelete(null)}
           onConfirm={() => {
             handleDeleteProject(projectToDelete.id);
+
             setProjectToDelete(null);
           }}
         />

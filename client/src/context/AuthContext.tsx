@@ -13,19 +13,19 @@ type AuthProviderProps = {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    return sessionStorage.getItem("taskflow-auth") === "true";
-  });
+ const [isAuthenticated, setIsAuthenticated] = useState(() => {
+  return localStorage.getItem("taskflow-auth") === "true";
+});
 
   const login = () => {
-    setIsAuthenticated(true);
-    sessionStorage.setItem("taskflow-auth", "true");
-  };
+  setIsAuthenticated(true);
+  localStorage.setItem("taskflow-auth", "true");
+};
 
   const logout = () => {
-    setIsAuthenticated(false);
-    sessionStorage.removeItem("taskflow-auth");
-  };
+  setIsAuthenticated(false);
+  localStorage.removeItem("taskflow-auth");
+};
 
   return (
     <AuthContext.Provider

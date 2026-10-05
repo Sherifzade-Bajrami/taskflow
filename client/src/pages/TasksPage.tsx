@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, ListTodo } from "lucide-react";
+import EmptyState from "../components/EmptyState";
 import NewTaskModal from "../components/NewTaskModal";
 import EditTaskModal from "../components/EditTaskModal";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
@@ -148,31 +149,30 @@ function TasksPage() {
           />
         </div>
       </div>
-      <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {filteredTasks.length === 0 && (
-          <div className="mt-6 rounded-2xl border border-dashed border-zinc-300 bg-white p-8 text-center dark:border-zinc-700 dark:bg-zinc-900">
-            <p className="font-medium text-zinc-900 dark:text-white">
-              No tasks found
-            </p>
-
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-              Try changing your search or status filter.
-            </p>
-          </div>
-        )}
-        {filteredTasks.map((task) => (
-          <TaskCard
-            key={task.id}
-            title={task.title}
-            status={task.status}
-            priority={task.priority}
-            dueDate={task.dueDate}
-            assignee={task.assignee}
-            onEdit={() => setSelectedTask(task)}
-            onDelete={() => setTaskToDelete(task)}
+      {filteredTasks.length > 0 ? (
+        <section className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {filteredTasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              title={task.title}
+              status={task.status}
+              priority={task.priority}
+              dueDate={task.dueDate}
+              assignee={task.assignee}
+              onEdit={() => setSelectedTask(task)}
+              onDelete={() => setTaskToDelete(task)}
+            />
+          ))}
+        </section>
+      ) : (
+        <div className="mt-6">
+          <EmptyState
+            icon={ListTodo}
+            title="No tasks found"
+            description="Try changing your search or status filter, or create a new task."
           />
-        ))}
-      </section>
+        </div>
+      )}
       <NewTaskModal
         isOpen={isNewTaskOpen}
         onClose={() => setIsNewTaskOpen(false)}

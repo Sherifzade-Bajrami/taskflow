@@ -1,4 +1,5 @@
 import { CheckCircle2, FolderKanban, ListTodo, Users } from "lucide-react";
+import { Link } from "react-router";
 
 import StatCard from "../components/StatCard";
 
@@ -89,12 +90,12 @@ function DashboardPage() {
             </p>
           </div>
 
-          <button
-            type="button"
-            className="w-full rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-violet-700 sm:w-auto"
+          <Link
+            to="/projects?new=1"
+            className="w-full rounded-xl bg-violet-600 px-4 py-2.5 text-center text-sm font-medium text-white transition hover:bg-violet-700 sm:w-auto"
           >
             New Project
-          </button>
+          </Link>
         </header>
 
         <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -121,12 +122,12 @@ function DashboardPage() {
                 </p>
               </div>
 
-              <button
-                type="button"
+              <Link
+                to="/projects"
                 className="text-sm font-medium text-violet-600 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300"
               >
                 View all
-              </button>
+              </Link>
             </div>
             <div className="space-y-5">
               {recentProjects.map((project) => (
@@ -173,12 +174,12 @@ function DashboardPage() {
                 </p>
               </div>
 
-              <button
-                type="button"
+              <Link
+                to="/tasks"
                 className="text-sm font-medium text-violet-600 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300"
               >
                 View all
-              </button>
+              </Link>
             </div>
             <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
               {" "}

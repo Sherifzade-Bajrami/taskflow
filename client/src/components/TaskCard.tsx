@@ -72,7 +72,7 @@ function TaskCard({
         <button
           type="button"
           onClick={onEdit}
-          className="rounded-lg border border-zinc-200 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 hover:text-zinc-950"
+          className="rounded-lg border border-zinc-200 px-3 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 hover:text-zinc-950 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white"
         >
           Edit
         </button>
@@ -80,7 +80,7 @@ function TaskCard({
         <button
           type="button"
           onClick={onDelete}
-          className="rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
+          className="rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 hover:text-red-950 dark:hover:bg-red-900/10 dark:hover:text-red-400"
         >
           Delete
         </button>
